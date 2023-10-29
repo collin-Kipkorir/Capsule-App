@@ -1,59 +1,57 @@
 package com.lecotech.capsuleapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-/**
- * A simple [Fragment] subclass.
- * Use the [QuizScreenFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class QuizScreenFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val questions = listOf(
+        QuizQuestion(
+            "What is the capital of France?",
+            listOf("London", "Berlin", "Paris", "Rome"),
+            2
+        ),
+        QuizQuestion(
+            "What is the powerhouse of the cell?",
+            listOf("Nucleus", "Mitochondria", "Ribosome", "Golgi apparatus"),
+            1
+        ),
+        QuizQuestion(
+            "Which planet is known as the Red Planet?",
+            listOf("Jupiter", "Mars", "Saturn", "Neptune"),
+            1
+        ),
+        QuizQuestion(
+            "What is the chemical symbol for water?",
+            listOf("O2", "CO2", "H2O", "NaCl"),
+            2
+        ),
+        QuizQuestion(
+            "Who is the author of \"To Kill a Mockingbird\"?",
+            listOf("William Shakespeare", "Jane Austen", "Harper Lee", "J.K. Rowling"),
+            2
+        )
+    )
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quiz_screen, container, false)
-    }
+        val rootView = inflater.inflate(R.layout.fragment_quiz_screen, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment QuizScreenFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            QuizScreenFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        val recyclerView: RecyclerView = rootView.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = QuizAdapter(questions)
+
+        return rootView
     }
 }
+
+
