@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +41,6 @@ class QuizScreenFragment : Fragment() {
         )
     )
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,10 +49,21 @@ class QuizScreenFragment : Fragment() {
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = QuizAdapter(questions)
+        recyclerView.adapter = QuizAdapter(questions) {
+            checkAllQuestionsAnswered()
+        }
 
         return rootView
     }
+
+    private fun checkAllQuestionsAnswered() {
+        for (question in questions) {
+            if (question.selectedOption == -1) {
+                val context = requireContext()
+                Toast.makeText(context, "Please answer all the questions", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+        // Implement your logic here to open the Results Fragment view
+    }
 }
-
-
