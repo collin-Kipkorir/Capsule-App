@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 
 class QuizScreenFragment : Fragment() {
 
@@ -49,21 +49,39 @@ class QuizScreenFragment : Fragment() {
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = QuizAdapter(questions) {
-            checkAllQuestionsAnswered()
+
+        val adapter = QuizAdapter(questions)
+        recyclerView.adapter = adapter
+
+        val checkResultsCardView: CardView = rootView.findViewById(R.id.checkresults)
+        checkResultsCardView.setOnClickListener {
+            checkAllQuestionsAnswered(adapter)
         }
 
         return rootView
     }
 
-    private fun checkAllQuestionsAnswered() {
-        for (question in questions) {
-            if (question.selectedOption == -1) {
-                val context = requireContext()
-                Toast.makeText(context, "Please answer all the questions", Toast.LENGTH_SHORT).show()
-                return
-            }
+    private fun checkAllQuestionsAnswered(adapter: QuizAdapter) {
+        val unansweredQuestions = adapter.getUnansweredQuestions()
+
+        if (unansweredQuestions.isNotEmpty()) {
+            // Not all questions have been answered
+            val context = requireContext()
+            Toast.makeText(context, "Please answer all questions", Toast.LENGTH_SHORT).show()
+        } else {
+            openQuizResultScreenFragment(adapter)
         }
-        // Implement your logic here to open the Results Fragment view
+    }
+
+    private fun openQuizResultScreenFragment(adapter: QuizAdapter) {
+//        val fragment = QuizResultScreenFragment.newInstance(adapter.getUserAnswers() as List<String>)
+//        val transaction = parentFragmentManager.beginTransaction()
+//        transaction.replace(R.id.fragment_container, fragment)
+//        transaction.addToBackStack(null)
+//        transaction.commit()
+//
+//        val tabLayout = requireActivity().findViewById<TabLayout>(R.id.tabLayout)
+//        val tab = tabLayout.getTabAt(3)
+//        tab?.select()
     }
 }
