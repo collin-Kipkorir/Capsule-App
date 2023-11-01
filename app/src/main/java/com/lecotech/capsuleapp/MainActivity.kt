@@ -26,6 +26,18 @@ class MainActivity : AppCompatActivity() {
         adapter = CapsulePagerAdapter(this)
         viewPager.adapter = adapter
 
+        viewPager.isUserInputEnabled = false
+
+        // Add the following ViewPager2.OnPageChangeCallback
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
+                    // Disable swiping by setting the current item to the same item
+                    viewPager.currentItem = viewPager.currentItem
+                }
+            }
+        })
+
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Video"

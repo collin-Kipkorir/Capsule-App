@@ -15,7 +15,7 @@
         android:layout_marginBottom="8dp"/>
 
     <TextView
-        android:id="@+id/correctAnswerTextView"
+        android:id="@+id/choosenAnswerTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
@@ -23,7 +23,7 @@
         android:layout_marginBottom="4dp"/>
 
     <TextView
-        android:id="@+id/userAnswerTextView"
+        android:id="@+id/correctAnswerTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"

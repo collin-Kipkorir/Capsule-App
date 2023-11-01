@@ -61,7 +61,9 @@ class VideoScreenFragment : Fragment() {
             val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
             viewPager.currentItem = 1
         }
+        
 
         return rootView
     }
+    
 }

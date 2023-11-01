@@ -1,39 +1,40 @@
 package com.lecotech.capsuleapp
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.lecotech.capsuleapp.QuizQuestion
+import com.lecotech.capsuleapp.R
 
-class QuizResultAdapter(
-    private val questions: List<QuizQuestion>,
-    private val correctAnswers: List<String>,
-    private val userAnswers: List<String>
-) : RecyclerView.Adapter<QuizResultAdapter.QuizResultViewHolder>() {
+class QuizResultAdapter(private val quizResults: List<QuizQuestion>) :
+    RecyclerView.Adapter<QuizResultAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizResultViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.result_item, parent, false)
-        return QuizResultViewHolder(itemView)
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val questionTextView: TextView = itemView.findViewById(R.id.questionTextView)
+        val chosenAnswerTextView: TextView = itemView.findViewById(R.id.choosenAnswerTextView)
+        val correctAnswerTextView: TextView = itemView.findViewById(R.id.correctAnswerTextView)
     }
 
-    override fun onBindViewHolder(holder: QuizResultViewHolder, position: Int) {
-        val currentQuestion = questions[position]
-        val userAnswer = userAnswers[position]
-        val correctAnswer = correctAnswers[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.result_item, parent, false)
+        return ViewHolder(view)
+    }
 
-        holder.questionTextView.text = currentQuestion.question
-        holder.userAnswerTextView.text = "Your answer: $userAnswer"
-        holder.correctAnswerTextView.text = "Correct answer: $correctAnswer"
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val quizQuestion = quizResults[position]
+        holder.questionTextView.text = quizQuestion.question
+        holder.chosenAnswerTextView.text =
+            "Chosen answer: ${quizQuestion.options[quizQuestion.selectedOption]}"
+        holder.correctAnswerTextView.text =
+            "Correct answer: ${quizQuestion.options[quizQuestion.correctAnswerIndex]}"
     }
 
     override fun getItemCount(): Int {
-        return questions.size
-    }
-
-    inner class QuizResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val questionTextView: TextView = itemView.findViewById(R.id.questionTextView)
-        val userAnswerTextView: TextView = itemView.findViewById(R.id.userAnswerTextView)
-        val correctAnswerTextView: TextView = itemView.findViewById(R.id.correctAnswerTextView)
+        return quizResults.size
     }
 }
