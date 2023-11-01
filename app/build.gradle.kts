@@ -60,5 +60,6 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:2.3.5")
 
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    
 
 }

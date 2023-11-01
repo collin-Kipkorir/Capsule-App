@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.MediaController
 import android.widget.VideoView
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 
 class VideoScreenFragment : Fragment() {
 
     private lateinit var videoView: VideoView
+    private lateinit var button: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,21 +22,27 @@ class VideoScreenFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_video_screen, container, false)
 
         videoView = rootView.findViewById(R.id.videoView)
+        button = rootView.findViewById(R.id.button) // replace with your button ID
 
-        val videoPath = "android.resource://" + requireActivity().packageName + "/" + R.raw.video
-        videoView.setVideoURI(Uri.parse(videoPath))
+        val videoUrl = "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"
+        val mediaController = MediaController(requireContext())
+        mediaController.setAnchorView(videoView)
+        videoView.setMediaController(mediaController)
+
+        button.setOnClickListener {
+            videoView.setVideoURI(Uri.parse(videoUrl))
+            videoView.requestFocus()
+            videoView.start()
+        }
+
+        videoView.setOnErrorListener { mp, what, extra ->
+            // Handle any errors or exceptions here
+            true
+        }
+
         videoView.setOnPreparedListener { mediaPlayer ->
             mediaPlayer.isLooping = false // Set true if you want to loop the video
             videoView.start()
-        }
-      
-        val openNotesCardView: CardView = rootView.findViewById(R.id.openNotes)
-        openNotesCardView.setOnClickListener {
-            val fragment = NotesScreenFragment()
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
         }
 
         return rootView
