@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 
 class QuizScreenFragment : Fragment() {
@@ -53,7 +54,7 @@ class QuizScreenFragment : Fragment() {
         val adapter = QuizAdapter(questions)
         recyclerView.adapter = adapter
 
-        val checkResultsCardView: CardView = rootView.findViewById(R.id.checkresults)
+        val checkResultsCardView: CardView = rootView.findViewById(R.id.quizButton)
         checkResultsCardView.setOnClickListener {
             checkAllQuestionsAnswered(adapter)
         }
@@ -74,14 +75,7 @@ class QuizScreenFragment : Fragment() {
     }
 
     private fun openQuizResultScreenFragment(adapter: QuizAdapter) {
-//        val fragment = QuizResultScreenFragment.newInstance(adapter.getUserAnswers() as List<String>)
-//        val transaction = parentFragmentManager.beginTransaction()
-//        transaction.replace(R.id.fragment_container, fragment)
-//        transaction.addToBackStack(null)
-//        transaction.commit()
-//
-//        val tabLayout = requireActivity().findViewById<TabLayout>(R.id.tabLayout)
-//        val tab = tabLayout.getTabAt(3)
-//        tab?.select()
+        val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
+        viewPager.currentItem = 3
     }
 }

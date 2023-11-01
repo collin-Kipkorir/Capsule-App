@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.MediaController
 import android.widget.VideoView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 
 class VideoScreenFragment : Fragment() {
 
@@ -51,6 +53,13 @@ class VideoScreenFragment : Fragment() {
             // Handle any errors or exceptions here
             progressDialog?.dismiss()
             true
+        }
+        val videoButton = rootView.findViewById<CardView>(R.id.videoButton)
+
+        videoButton.setOnClickListener {
+            // Add the code to navigate to the desired tab index here
+            val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
+            viewPager.currentItem = 1
         }
 
         return rootView

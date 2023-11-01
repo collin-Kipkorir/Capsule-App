@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 
 class NotesScreenFragment : Fragment() {
 
@@ -28,6 +30,13 @@ class NotesScreenFragment : Fragment() {
         val webSettings: WebSettings = webView.settings
         webSettings.javaScriptEnabled = true
 
+        val notesButton = view.findViewById<CardView>(R.id.notesButton)
+
+        notesButton.setOnClickListener {
+            // Add the code to navigate to the desired tab index here
+            val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
+            viewPager.currentItem = 2
+        }
         return view
     }
 }
