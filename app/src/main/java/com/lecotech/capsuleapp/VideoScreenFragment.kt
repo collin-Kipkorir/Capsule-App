@@ -1,5 +1,6 @@
 package com.lecotech.capsuleapp
 
+import android.app.ProgressDialog
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ class VideoScreenFragment : Fragment() {
 
     private lateinit var videoView: VideoView
     private lateinit var button: Button
+    private var progressDialog: ProgressDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,26 +25,34 @@ class VideoScreenFragment : Fragment() {
 
         videoView = rootView.findViewById(R.id.videoView)
         button = rootView.findViewById(R.id.button) // replace with your button ID
-
         val videoUrl = "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"
         val mediaController = MediaController(requireContext())
         mediaController.setAnchorView(videoView)
         videoView.setMediaController(mediaController)
 
         button.setOnClickListener {
+            progressDialog = ProgressDialog(requireContext())
+            progressDialog?.setTitle("Loading")
+            progressDialog?.setMessage("Loading video...")
+            progressDialog?.setCancelable(false)
+            progressDialog?.show()
+            
             videoView.setVideoURI(Uri.parse(videoUrl))
             videoView.requestFocus()
             videoView.start()
         }
 
-        videoView.setOnErrorListener { mp, what, extra ->
-            // Handle any errors or exceptions here
-            true
-        }
-
         videoView.setOnPreparedListener { mediaPlayer ->
             mediaPlayer.isLooping = false // Set true if you want to loop the video
             videoView.start()
+            // Dismiss the progress dialog when the video is ready
+            progressDialog?.dismiss()
+        }
+
+        videoView.setOnErrorListener { mp, what, extra ->
+            // Handle any errors or exceptions here
+            progressDialog?.dismiss()
+            true
         }
 
         return rootView
