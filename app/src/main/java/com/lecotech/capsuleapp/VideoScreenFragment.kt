@@ -24,7 +24,7 @@ class VideoScreenFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_video_screen, container, false)
 
         videoView = rootView.findViewById(R.id.videoView)
-        button = rootView.findViewById(R.id.button) // replace with your button ID
+        button = rootView.findViewById(R.id.button)
         val videoUrl = "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"
         val mediaController = MediaController(requireContext())
         mediaController.setAnchorView(videoView)
@@ -32,11 +32,10 @@ class VideoScreenFragment : Fragment() {
 
         button.setOnClickListener {
             progressDialog = ProgressDialog(requireContext())
-            progressDialog?.setTitle("Loading")
             progressDialog?.setMessage("Loading video...")
             progressDialog?.setCancelable(false)
             progressDialog?.show()
-            
+
             videoView.setVideoURI(Uri.parse(videoUrl))
             videoView.requestFocus()
             videoView.start()
@@ -45,7 +44,6 @@ class VideoScreenFragment : Fragment() {
         videoView.setOnPreparedListener { mediaPlayer ->
             mediaPlayer.isLooping = false // Set true if you want to loop the video
             videoView.start()
-            // Dismiss the progress dialog when the video is ready
             progressDialog?.dismiss()
         }
 
