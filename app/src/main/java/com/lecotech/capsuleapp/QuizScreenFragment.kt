@@ -16,29 +16,29 @@ class QuizScreenFragment : Fragment() {
 
     private val questions = listOf(
         QuizQuestion(
-            "What is the capital of France?",
+            "1. What is the capital of France?",
             listOf("London", "Berlin", "Paris", "Rome"),
-            2
+            3
         ),
         QuizQuestion(
-            "What is the powerhouse of the cell?",
+            "2. What is the powerhouse of the cell?",
             listOf("Nucleus", "Mitochondria", "Ribosome", "Golgi apparatus"),
-            1
+            2
         ),
         QuizQuestion(
-            "Which planet is known as the Red Planet?",
+            "3. Which planet is known as the Red Planet?",
             listOf("Jupiter", "Mars", "Saturn", "Neptune"),
-            1
+            3
         ),
         QuizQuestion(
-            "What is the chemical symbol for water?",
+            "4. What is the chemical symbol for water?",
             listOf("O2", "CO2", "H2O", "NaCl"),
-            2
+            3
         ),
         QuizQuestion(
-            "Who is the author of \"To Kill a Mockingbird\"?",
+            "5. Who is the author of \"To Kill a Mockingbird\"?",
             listOf("William Shakespeare", "Jane Austen", "Harper Lee", "J.K. Rowling"),
-            2
+            3
         )
     )
 
@@ -75,6 +75,7 @@ class QuizScreenFragment : Fragment() {
     }
 
     private fun openQuizResultScreenFragment(adapter: QuizAdapter) {
+        
         val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
         viewPager.currentItem = 3
     }

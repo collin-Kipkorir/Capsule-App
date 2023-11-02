@@ -7,8 +7,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class QuizAdapter(private val questions: List<QuizQuestion>) :
-    RecyclerView.Adapter<QuizAdapter.QuizViewHolder>() {
+class QuizAdapter(private val questions: List<QuizQuestion>) : RecyclerView.Adapter<QuizAdapter.QuizViewHolder>() {
 
     private val answeredQuestions = mutableSetOf<Int>()
 
